@@ -92,27 +92,49 @@ function startHeartAnimation() {
 	};
 })(jQuery);
 
-function timeElapse(date){
-	var current = Date();
-	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
-	var days = Math.floor(seconds / (3600 * 24));
-	seconds = seconds % (3600 * 24);
-	var hours = Math.floor(seconds / 3600);
-	if (hours < 10) {
-		hours = "0" + hours;
-	}
-	seconds = seconds % 3600;
-	var minutes = Math.floor(seconds / 60);
-	if (minutes < 10) {
-		minutes = "0" + minutes;
-	}
-	seconds = seconds % 60;
-	if (seconds < 10) {
-		seconds = "0" + seconds;
-	}
-	var result = "<span class=\"digit\">" + days + "</span> days <span class=\"digit\">" + hours + "</span> hours <span class=\"digit\">" + minutes + "</span> minutes <span class=\"digit\">" + seconds + "</span> seconds"; 
-	$("#elapseClock").html(result);
+function timeElapse(dateString) {
+    var current = new Date(); // Get the current date and time
+    var startDate = new Date(dateString); // Parse the input date string into a Date object
+    
+    // Ensure startDate is valid
+    if (isNaN(startDate)) {
+        console.error('The provided date is invalid.');
+        return;
+    }
+    
+    var seconds = (current - startDate) / 1000; // Calculate the difference in seconds
+    var days = Math.floor(seconds / (3600 * 24));
+    seconds = seconds % (3600 * 24);
+    
+    var hours = Math.floor(seconds / 3600);
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    seconds = seconds % 3600;
+    
+    var minutes = Math.floor(seconds / 60);
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    
+    var result = "<span class=\"digit\">" + days + "</span> days <span class=\"digit\">" + hours + "</span> hours <span class=\"digit\">" + minutes + "</span> minutes <span class=\"digit\">" + seconds + "</span> seconds"; 
+    
+    $("#elapseClock").html(result);
 }
+
+// Example usage
+var startDate = "2022-07-29T00:00:00"; // Use ISO 8601 format for consistency
+timeElapse(startDate);
+
+// Update every second
+setInterval(function() {
+    timeElapse(startDate);
+}, 1000);
 
 function showMessages() {
 	adjustWordsPosition();

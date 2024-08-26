@@ -128,7 +128,7 @@ function timeElapse(dateString) {
 }
 
 // Example usage
-var startDate = "2022-07-29T00:00:00"; // Use ISO 8601 format for consistency
+var startDate = "2003-08-29T00:00:00"; // Use ISO 8601 format for consistency
 timeElapse(startDate);
 
 // Update every second
